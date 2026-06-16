@@ -50,6 +50,9 @@
   --sage: #99A294;
   --sage-soft: #E5E8E1;
   --sage-deep: #5A6454;
+  --blue: #31a7ca;
+  --rose: #c053c3;
+  --lilac:#b996f2;
 
   --plum: #7e5a78;
   --plum-soft: #ece3ea;
@@ -807,7 +810,7 @@ button.small { min-height: 20px; padding: 5px 10px; font-size: 11px; }
 }
 #bottom-tabs button:hover svg,
 #bottom-tabs button:focus-visible svg { transform: translateY(-1px); }
-#bottom-tabs button.active { color: var(--accent); }
+#bottom-tabs button.active { color: var(--accent); background: var(--accent-soft);}
 #bottom-tabs button.active::before {
   content: '';
   position: absolute;
@@ -1773,7 +1776,7 @@ const PHASES = [
       note: 'Built for real weeks, not perfect ones. Your baseline — yoga, short bodyweight, weekend rides — stands on its own legs: it is never earned by food and never cancelled by a hard night. A session after a binge night stays its planned size. Never longer.',
       mix: {
         'Yoga': '3× when the week allows',
-        'Strength': 'bodyweight 2× · 20 min — one upper, one lower, never the same sore muscles twice',
+        'Strength': 'bodyweight 2× · 20 min — one upper, one lower',
         'Cycling': 'with Dillon on weekends when it’s nice out',
         'Walking': 'what you already do — nothing added',
         'Rest': 'sleep is the training',
@@ -2949,7 +2952,7 @@ function sessionListHtml(day) {
     '<div class="calc-row"><span class="k"><strong>' + esc(x.type) + '</strong>' +
     (x.mins ? ' · ' + x.mins + ' min' : '') + (x.effort ? ' · felt ' + effLabel(x.effort) : '') +
     (x.detail ? '<span class="sub" style="white-space:pre-line;">' + esc(x.detail) + '</span>' : '') +
-    '</span><button class="je-del" data-delsession="' + x.id + '">remove</button></div>').join('') + '</div>';
+    '</span><button class="small" data-delsession="' + x.id + '">remove</button></div>').join('') + '</div>';
 }
 
 function lastSessionOfType(type, beforeDate) {
@@ -3063,7 +3066,7 @@ function renderToday() {
 
   /* After a hard day yesterday */
   if (yesterday && (yesterday.hard || yesterday.night)) {
-    html += '<div class="banner quiet"><strong>After a hard night, today’s only job is normal.</strong> Four ordinary meals, no making up for anything. If movement was planned, it happens at its planned size — never longer, never cancelled. That is the entire assignment, and it is enough. <button class="ct-action" data-go="still" style="display:inline;padding:0;">→ the Still page is here if it’s loud</button></div>';
+    html += '<div class="banner quiet"><strong>After a hard night, today’s only job is normal.</strong> Four ordinary meals, no making up for anything. If movement was planned, it happens at its planned size. That is the entire assignment, and it is enough. <button class="eb-link" data-go="still" style="justify:right;">the Still page is here</button></div>';
   }
 
   /* Today's focuses */
@@ -3679,7 +3682,7 @@ function openDayModal(ds) {
   const x = '<button class="x-btn" onclick="closeModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>';
   let body = '';
   if (!d || !dayHasData(d)) {
-    body = '<p>Nothing logged this day — which is information, not a debt.</p>';
+    body = '<p>Nothing logged this day.</p>';
   } else {
     const i = intakeOf(d), n = netOf(d);
     const stats = [];
@@ -3694,41 +3697,41 @@ function openDayModal(ds) {
     if (d.workoutText) move.push(esc(d.workoutText));
     (d.moveTypes || []).forEach(t => move.push(esc(t)));
     (d.sessions || []).forEach(x2 => move.push(esc(x2.type) + (x2.mins ? ' · ' + x2.mins + ' min' : '') + (x2.effort ? ' · felt ' + effLabel(x2.effort) : '') + (x2.detail ? '<br><span class="small">' + esc(x2.detail) + '</span>' : '')));
-    if (move.length) body += '<div class="eyebrow" style="margin:12px 0 4px;">Movement</div><p style="margin:0 0 8px;">' + move.join('<br>') + '</p>';
+    if (move.length) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">Movement</div><p class="small" style="margin:0 0 15px;">' + move.join('<br>') + '</p>';
 
     const kept = ANCHORS.filter(a => d.anchors && d.anchors[a.id]).map(a => a.label);
-    body += '<div class="eyebrow" style="margin:12px 0 4px;">Anchors — ' + kept.length + ' / ' + ANCHORS.length + '</div>';
-    if (kept.length) body += '<p class="small" style="margin:0 0 8px;">' + kept.map(esc).join(' · ') + '</p>';
+    body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">Anchors — ' + kept.length + ' / ' + ANCHORS.length + '</div>';
+    if (kept.length) body += '<p class="small" style="margin:0 0 15px;">' + kept.map(esc).join(' · ') + '</p>';
 
     const care = CARE_MIN.filter(c => d.care && d.care[c.id]).map(c => c.label).concat(d.extraCare || []);
-    if (care.length) body += '<div class="eyebrow" style="margin:12px 0 4px;">Care</div><p class="small" style="margin:0 0 8px;">' + care.map(esc).join(' · ') + '</p>';
+    if (care.length) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">Care</div><p class="small" style="margin:0 0 15px;">' + care.map(esc).join(' · ') + '</p>';
 
     const mchD = mealChecksHtml(d);
-    if (mchD) body += '<div class="eyebrow" style="margin:12px 0 4px;">At the table</div>' + mchD;
+    if (mchD) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line)">At the table</div>' + mchD;
 
-    if ((d.habits || []).length) body += '<div class="eyebrow" style="margin:12px 0 4px;">Habits, practices & mind</div><p class="small" style="margin:0 0 8px;">' + d.habits.map(esc).join(' · ') + '</p>';
+    if ((d.habits || []).length) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">Habits, practices & mind</div><p class="small" style="margin:0 0 15px;">' + d.habits.map(esc).join(' · ') + '</p>';
 
     const feelBits = [];
     if (d.feel) { const f = FEELS.find(x2 => x2.id === d.feel); if (f) feelBits.push('felt ' + f.label); }
     if (d.feelWord) feelBits.push('“' + esc(d.feelWord) + '”');
     DAY_FLAGS.forEach(f => { if (d[f.id]) feelBits.push(f.label); });
-    if (feelBits.length) body += '<div class="eyebrow" style="margin:12px 0 4px;">The day, honestly</div><p class="small" style="margin:0 0 8px;">' + feelBits.join(' · ') + '</p>';
+    if (feelBits.length) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">The day, honestly</div><p class="small" style="margin:0 0 15px;">' + feelBits.join(' · ') + '</p>';
 
     const ftList = Object.values(d.focusTexts || {});
     if (ftList.length) {
-      body += '<div class="eyebrow" style="margin:12px 0 4px;">Gentle focuses done</div>' +
-        ftList.map(f => '<p style="margin:0 0 8px;font-size:var(--fs-body-sm);color:var(--ink-2);">' + esc(f.text) + ' <span class="win-tag">' + esc(f.theme) + '</span></p>').join('');
+      body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">Gentle focuses done</div>' +
+        ftList.map(f => '<div style="display:flex;align-items:flex-start;gap:12px;margin:0 0 15px;"><span class="win-tag" style="flex-shrink:0;margin-top:1px;">' + esc(f.theme) + '</span><span class="small">' + esc(f.text) + '</span></div>').join(''); 
     } else if ((d.focusDone || []).length) {
-      body += '<p class="small" style="margin:8px 0;">' + d.focusDone.length + ' gentle focus' + (d.focusDone.length === 1 ? '' : 'es') + ' done.</p>';
+      body += '<p class="small" style="margin:15px 0;">' + d.focusDone.length + ' gentle focus' + (d.focusDone.length === 1 ? '' : 'es') + ' done.</p>';
     }
-    if (d.note) body += '<div class="eyebrow" style="margin:12px 0 4px;">Note to self</div><p style="margin:0 0 8px;white-space:pre-wrap;">' + esc(d.note) + '</p>';
+    if (d.note) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line)">Note to self</div><p style="margin:0 0 15px;white-space:pre-wrap;">' + esc(d.note) + '</p>';
 
     const ref = state.journal.find(j => j.date === ds && j.kind === 'reflection');
-    if (ref) body += '<div class="eyebrow" style="margin:12px 0 4px;">Reflection</div>' +
+    if (ref) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">Reflection</div>' +
       (ref.prompt ? '<p class="gentle-line" style="margin-bottom:8px;font-size:var(--fs-body-sm);">' + esc(ref.prompt) + '</p>' : '') +
       '<p style="margin:0 0 8px;white-space:pre-wrap;">' + esc(ref.text) + '</p>';
     const wins = state.wins.filter(w => w.date === ds);
-    if (wins.length) body += '<div class="eyebrow" style="margin:12px 0 4px;">Evidence</div>' + wins.map(w => '<p style="margin:0 0 8px;">' + esc(w.text) + ' <span class="win-tag">' + esc(w.tag) + '</span></p>').join('');
+    if (wins.length) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">Evidence</div>' + wins.map(w => '<p style="margin:0 0 15px;">' + esc(w.text) + ' <span class="win-tag">' + esc(w.tag) + '</span></p>').join('');
 
     body += notesHtml(d);
   }
@@ -4083,7 +4086,7 @@ function renderCalc() {
     numIn('c-flat', '0% flat miles', calcVals.flat, 'minus the two miles already inside NEAT') +
     '<div><span class="mini-lbl">Other workout (gross, net kcal)</span>' +
     '<input type="text" inputmode="decimal" id="c-workout" value="' + esc(calcVals.workout) + '" placeholder="e.g. 200, 150">' +
-    '<span class="help" style="display:block;font-size:var(--fs-caption);color:var(--muted);margin-top:3px;">gross, then net — net is gross minus ~25 per 30 min, ~50 per 60 min. One number alone assumes −50.</span></div>' +
+    '<span class="help" style="display:block;font-size:var(--fs-caption);color:var(--muted);margin-top:3px;">gross, net minus ~25 per 30 min, ~50 per 60 min</span></div>' +
     numIn('c-intake', 'Planned intake (for TEF)', calcVals.intake, '10% of intake') +
     numIn('c-neat', 'NEAT estimate', calcVals.neat, '150 ≈ 2 baseline miles (~70) + ~80 non-walking') +
     numIn('c-bmr', 'BMR', calcVals.bmr) +
@@ -4110,7 +4113,7 @@ function renderCalc() {
   html += '<p class="small" style="margin:0 0 12px;">The template from your plan. Adjust freely — the totals do the arithmetic so you don’t have to hold it.</p>';
   html += '<div class="input-grid-4">';
   MEAL_TEMPLATE.forEach(m => {
-    html += '<div><span class="mini-lbl">' + m.name + ' kcal</span><input type="number" inputmode="numeric" id="p-k-' + m.id + '" value="' + m.kcal + '"></div>';
+    html += '<div><span class="mini-lbl">' + m.name + '</span><input type="number" inputmode="numeric" id="p-k-' + m.id + '" value="' + m.kcal + '"></div>';
   });
   html += '</div><div class="input-grid-4" style="margin-top:8px;">';
   MEAL_TEMPLATE.forEach(m => {
@@ -4973,7 +4976,7 @@ function renderTable() {
     '<textarea id="t-note" style="min-height:60px;" placeholder="A sentence is plenty.">' + esc(mc.note || '') + '</textarea></div></div>';
 
   html += '<div class="btn-row"><button class="primary" id="t-done">Done — it’s in the day</button></div>';
-  html += '<p class="small" style="margin:12px 0 0;color:var(--muted);">No meal is graded here. Arriving at the table at all is the practice.</p>';
+  html += '<p class="small" style="margin:12px 0 0;color:var(--muted);">Arriving at the table is the practice.</p>';
 
   document.getElementById('view-table').innerHTML = html;
   bindTable();
@@ -5530,7 +5533,7 @@ function renderSettings() {
     numIn('s-snack', 'Night snack cap', cfg.snackCap) +
     numIn('s-bmr', 'BMR', cfg.bmr) +
     numIn('s-neat', 'NEAT default', cfg.neat) +
-    '</div><p class="small" style="margin:8px 0 0;">A quiet rule of thumb: these numbers should only ever drift toward more food and less compulsion during the day.</p></div>';
+    '</div><p class="small" style="margin:8px 0 0;">A quiet rule of thumb: these numbers should only ever drift toward more food.</p></div>';
 
   html += '<div class="card"><div class="card-title">Appearance</div>' +
     '<div class="field"><span class="lbl">Theme</span><div class="chips" id="s-themes">' +
@@ -5719,14 +5722,14 @@ function openFirstRun() {
   openModal(
     '<div class="modal-head"><h2>Hello.</h2></div>' +
     '<div class="modal-body">' +
-    '<p class="gentle-line" style="font-size:var(--fs-lg);">This is Tend — your plan, turned into a place you can live in. It will never shame you, rush you, or do math at you unkindly.</p>' +
-    '<p>Everything from the spreadsheet is here: the anchors, the ranges, the calculators, the goals. Plus a journal, an evidence log, and a five-phase path from <em>stable</em> to <em>a life that’s yours</em>.</p>' +
+    '<p class="gentle-line" style="font-size:var(--fs-lg);">This is Tend — your plan, turned into a place you can live in.</p>' +
+    '<p>Everything is here: the anchors, the ranges, the calculators, the goals. Plus a journal, an evidence log, and a five-phase path from <em>stable</em> to <em>a life that’s yours</em>.</p>' +
     '<label class="field"><span class="lbl">What should it call you?</span><input type="text" id="fr-name" value="Isabel"></label>' +
     '<div class="field"><span class="lbl">Where does it feel right to begin?</span><div id="fr-phases">' +
     PHASES.map(p => '<label class="check-row"><input type="radio" name="fr-phase" value="' + p.n + '"' + (p.n === 1 ? ' checked' : '') + '>' +
       '<span class="box" style="border-radius:50%;"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg></span>' +
       '<span class="txt"><span class="main"><strong>' + p.n + ' · ' + p.name + '</strong></span><span class="why">' + esc(p.intent) + '</span></span></label>').join('') +
-    '</div><span class="help">You’ve been doing this work already — starting partway in is honest, not cheating.</span></div>' +
+    '</div><span class="help">You’ve been doing this work already — start where it is honest</span></div>' +
     '</div>' +
     '<div class="modal-foot"><button class="primary" id="fr-begin">Begin gently</button></div>',
     { sticky: true, full: true }
