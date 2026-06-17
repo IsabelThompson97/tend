@@ -995,14 +995,14 @@ html.theme-evening .check-row input:checked ~ .box { color: #242227; }
 /* Chips */
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip {
-  padding: 6px 12px;
+  padding: 4px 8px;
   border: 1px solid var(--line-2);
   border-radius: 999px;
   background: var(--panel);
   color: var(--ink-2);
   cursor: pointer;
-  font-size: var(--fs-sm);
-  min-height: 32px;
+  font-size: var(--fs-caption);
+  min-height: 20px;
   display: inline-flex; align-items: center;
   user-select: none;
 }
@@ -1084,7 +1084,7 @@ html.theme-evening .check-row input:checked ~ .box { color: #242227; }
 
 /* Focus rows: thread tag leads, checkbox trails */
 .focus-row { align-items: center; }
-.focus-row .win-tag { flex-shrink: 0; }
+.focus-row .win-tag {flex-shrink: 0;}
 .focus-row .box { order: 3; width: 16px; height: 16px; border-radius: 5px; }
 .focus-row .txt { order: 2; }
 .focus-row .txt .why { display: none; }
@@ -1552,7 +1552,7 @@ hr.soft { border: none; border-top: 1px dashed var(--line); margin: 20px 0; }
   <nav id="bottom-tabs">
     <button data-view="journey">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="15.8 8.2 13.9 13.9 8.2 15.8 10.1 10.1 15.8 8.2"/></svg>
-      Journey
+      Path
     </button>
     <button data-view="trends">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9.5 10.5 13.5 14.5 21 7"/><polyline points="15 7 21 7 21 13"/></svg>
@@ -1678,31 +1678,31 @@ function careTiersHtml(day, attr) {
 
 const MIND_LIST = [
   'Reading — articles, magazines, books', 'Paint by number / painting / drawing / beading',
-  'Gardening, plants, flowers', 'Newsletter to No One', 'Make playlists',
+  'Gardening, plants, flowers', 'Newsletter to No One', 'Make playlists', 'Word lists',
   'Tea + podcast + sudoku', 'Writing for yourself', 'Organize code / GitHub',
-  'Walk outside, untracked', 'Organize Magic cards'
+  'Walk outside, untracked', 'Organize Magic cards', 'Go', 'Watch an indie film', 'Read one poem'
 ];
 
 const FRIENDS = ['Natalie', 'Matt', 'Taylor', 'Mooch', 'Alivia', 'Nell'];
 
 /* ---------- Habits & practices: tap-what-happened, never assignments ---------- */
 const HABITS = [
-  'Plants', 'House', 'Read 10 min', 'Write 5 min', 'Lance',
-  'Talk to someone', 'Painting / art', 'Sudoku / puzzles', 'Playlists', 'Podcast / YouTube',
-  'Outside time', 'Cooked something', 'Tea, slowly', 'Music',
-  'Magic cards', 'Code for fun', 'Did nothing for 10 min'
+  'Plants', 'House / chores', 'Read 10 min', 'Write 5 min', 'Lance', 'Beading', 'Flowers',
+  'Talk to someone', 'Painting / drawing / sketching', 'Sudoku / puzzles', 'Playlists', 'Podcast / YouTube',
+  'Outside', 'Cooked something', 'Tea, slowly', 'Music', 'Organize', 'Games, together',
+  'Magic cards', 'Code', 'Nothing / negative space', 'Photos', 'Movie / TV', 'Go'
 ];
 
 /* ---------- The eight threads running through everything ---------- */
 const THEMES = [
   { id: 'nourish', name: 'nourish', desc: 'Food as care — maintenance as the root of everything else' },
   { id: 'move',    name: 'move',    desc: 'Rebuilding — strength, consistency, body recomposition' },
-  { id: 'rest',    name: 'rest',    desc: 'Slowing down – returning home, making time' },
+  { id: 'rest',    name: 'rest',    desc: 'Slowing down – returning home, making time, cultivating' },
   { id: 'steady',  name: 'steady',  desc: 'Feeling emotions — naming, yielding, softening' },
   { id: 'connect', name: 'connect', desc: 'Relationships — being witnessed + accompanied, loving and being loved' },
-  { id: 'regard',  name: 'regard',  desc: 'Self-worth — the interior voice, purpose + meaning, your inner world as something to hold & protect' },
-  { id: 'embody',  name: 'embody',  desc: 'Living in the body — senses, signals, touch; home as a place you inhabit, not a project you manage' },
-  { id: 'agency',  name: 'agency',  desc: 'Autonomy and choices — building a life that is yours alone, moving through the world' }
+  { id: 'regard',  name: 'regard',  desc: 'Self-worth — the interior voice, purpose + meaning, your inner being worth protecting' },
+  { id: 'embody',  name: 'embody',  desc: 'Living in the body — senses, signals, touch; body as home, a place you inhabit' },
+  { id: 'agency',  name: 'agency',  desc: 'Autonomy and choices — a life that is yours alone, moving through the world' }
 ];
 
 const MOVE_TYPES = ['Walking', 'Cycling', 'Strength','Yoga', 'Pilates', 'Stretch / mobility'];
@@ -1722,8 +1722,8 @@ const EFFORTS = [
 function effLabel(id) { const e = EFFORTS.find(x => x.id === id); return e ? e.label : ''; }
 
 const DAY_FLAGS = [
-  { id: 'hard',      label: 'hard eating moment' },
-  { id: 'night',     label: 'night eating' },
+  { id: 'hard',      label: 'hard day' },
+  { id: 'night',     label: 'night eating, last night' },
   { id: 'rest',      label: 'rest day' },
   { id: 'untracked', label: 'untracked by choice' }
 ];
@@ -1777,7 +1777,7 @@ const PHASES = [
       mix: {
         'Yoga': '3× when the week allows',
         'Strength': 'bodyweight 2× · 20 min — one upper, one lower',
-        'Cycling': 'with Dillon on weekends when it’s nice out',
+        'Cycling': 'with Dillon when you can',
         'Walking': 'what you already do — nothing added',
         'Rest': 'sleep is the training',
         'On a hard week': 'one yoga + one 10-minute bodyweight + your walks = the mix was kept. Truly.'
@@ -2352,7 +2352,7 @@ function weeklyReadingDone(date) {
    AT THE TABLE — a small ritual for meals, from the I NEED list
    ============================================================= */
 const TABLE_SETTLE = [
-  { id: 'plated', label: 'Plated, not packaged' },
+  { id: 'plated', label: 'Plated, not panicked' },
   { id: 'seated', label: 'Sitting down, at the table' },
   { id: 'sound',  label: 'Something on — music or a podcast' },
   { id: 'puzzle', label: 'Puzzle or page within reach' },
@@ -2361,9 +2361,9 @@ const TABLE_SETTLE = [
 const TABLE_LINES = [
   'God, I offer myself to Thee — to build with me and to do with me as Thou wilt. Relieve me of the bondage of self, that I may better do Thy will.',
   'Look at the world with softer eyes.',
-  'Simple reliance upon the spirit of the universe.',
+  'Simple reliance on simple habits',
   'You don’t have to do anything. Love does it to you.',
-  'This meal is the work, not a failure of it.'
+  'Food as communion - with others, most of all yourself'
 ];
 const HF_STOPS = 7; // hunger/fullness scale: 1 hollow … 7 very full
 
@@ -2441,6 +2441,7 @@ const FEELS = [
   { id: 'tender',   label: 'tender' },
   { id: 'raw',      label: 'raw' },
   { id: 'restless', label: 'restless' },
+  { id: 'untethered', label: 'untethered' },
   { id: 'heavy',    label: 'heavy' },
   { id: 'foggy',    label: 'foggy' },
   { id: 'hollow',   label: 'hollow' },
@@ -2451,6 +2452,16 @@ const FEELS = [
   { id: 'homesick', label: 'homesick' },
   { id: 'becoming', label: 'becoming' }
 ];
+
+// day.feel may be an array of ids, a single id (older entries), or null.
+// These normalize both shapes so multi-select works without breaking old data.
+function feelList(d) {
+  if (!d || d.feel == null) return [];
+  return Array.isArray(d.feel) ? d.feel.slice() : [d.feel];
+}
+function feelLabels(d) {
+  return feelList(d).map(id => (FEELS.find(f => f.id === id) || {}).label || id).filter(Boolean);
+}
 
 const WIN_TAGS = ['food', 'body', 'people', 'life'];
 
@@ -2747,8 +2758,8 @@ function blankDay(date) {
     feel: null,
     feelWord: '',
     habits: [],
-    hard: false,      // a hard eating moment happened
-    night: false,     // night eating happened
+    hard: false,      // a hard moment/day happened
+    night: false,     // night eating happened last night
     rest: false,      // intentional rest day
     untracked: false, // chose not to track numbers today (a skill, not a gap)
     focusDone: [],
@@ -2789,7 +2800,7 @@ function netOf(day) {
 function dayHasData(day) {
   if (!day) return false;
   return intakeOf(day) != null || day.expend != null || day.steps != null ||
-    (day.workoutText && day.workoutText.length) || day.feel != null ||
+    (day.workoutText && day.workoutText.length) || feelList(day).length > 0 ||
     Object.values(day.anchors || {}).some(Boolean) || Object.values(day.care || {}).some(Boolean) ||
     (day.note && day.note.length) || day.untracked || day.rest;
 }
@@ -2853,10 +2864,10 @@ function dayNotes(day) {
     notes.push({ tone: 'kind', text: 'An untracked day — that’s a practiced skill, not missing data.' });
     return notes;
   }
-  if (day.hard || day.night) {
-    notes.push({ tone: 'quiet', text: 'A hard moment happened. It’s data, not a verdict. The plan is clear: no compensating — the next normal meal is the repair.' });
+  if (day.night) {
+    notes.push({ tone: 'quiet', text: 'A hard night is in the past, you haven\'t broken anything. The next normal meal is how you begin again.' });
   }
-  if (intake != null && intake < 1200) {
+  if (intake != null && intake < 1300) {
     notes.push({ tone: 'warn', text: 'That’s very little for a body working this hard. Tonight, be gentle and feed yourself — tomorrow starts fed.' });
   }
   if (net != null && net < -cfg.deficitCap) {
@@ -2876,11 +2887,8 @@ function dayNotes(day) {
   if ((day.sessions || []).some(x => x.effort === 'toomuch')) {
     notes.push({ tone: 'warn', text: 'Something felt like too much today. With DOMS like yours the answer is smaller next time, never skipping — fewer sets, same movement, food on top. The swelling after lifting is fluid and repair, not gain, and it fades as your body relearns this.' });
   }
-  if (day.steps != null && Number(day.steps) > 34000) {
+  if (day.steps != null && Number(day.steps) > 32000) {
     notes.push({ tone: 'warn', text: 'That’s a lot of miles for one body to carry. Could tomorrow be 10% softer? Rest builds; grind borrows.' });
-  }
-  if (day.rest) {
-    notes.push({ tone: 'kind', text: 'A rest day. The bravest entry in this whole log.' });
   }
   return notes;
 }
@@ -2896,7 +2904,7 @@ function notesHtml(day) {
 let activeView = 'today';
 let settingsReturnTo = 'today';
 const VIEW_TITLES = {
-  today: 'tend', log: 'log', trends: 'trends', journey: 'journey',
+  today: 'tend', log: 'log', trends: 'trends', journey: 'the way home',
   tools: 'tools', calc: 'calculator', journal: 'journal', plan: 'the plan',
   still: 'still', selides: 'selídes + syllogés', table: 'at the table',
   archive: 'archive', settings: 'settings'
@@ -3065,8 +3073,8 @@ function renderToday() {
   html += '<div class="today-quote"><p class="gentle-line">' + esc(gentleLine(date)) + '</p></div>';
 
   /* After a hard day yesterday */
-  if (yesterday && (yesterday.hard || yesterday.night)) {
-    html += '<div class="banner quiet"><strong>After a hard night, today’s only job is normal.</strong> Four ordinary meals, no making up for anything. If movement was planned, it happens at its planned size. That is the entire assignment, and it is enough. <button class="eb-link" data-go="still" style="justify:right;">the Still page is here</button></div>';
+  if (yesterday && (day.night)) {
+    html += '<div class="banner quiet"><strong>After a hard night, today’s only job is normal.</strong> Four ordinary meals, no making up for anything. If movement was planned, it happens at its planned size. That is the entire assignment, and it is enough.</div>';
   }
 
   /* Today's focuses */
@@ -3190,7 +3198,9 @@ function bindTodayCommon(root, date) {
   };
 
   root.querySelectorAll('[data-feel]').forEach(b => b.addEventListener('click', () => {
-    day.feel = day.feel === b.dataset.feel ? null : b.dataset.feel;
+    const id = b.dataset.feel;
+    const cur = feelList(day);
+    day.feel = cur.includes(id) ? cur.filter(x => x !== id) : cur.concat(id);
     saveState(); renderToday();
   }));
 
@@ -3361,12 +3371,17 @@ function renderDayEditor(date) {
   /* The day, honestly */
   html += '<div class="card"><div class="card-title">The day, honestly</div>';
   html += '<div class="chips" style="margin-bottom:12px;">';
-  FEELS.forEach(f => {
-    html += '<span class="chip' + (day.feel === f.id ? ' selected' : '') + '" data-lefeel="' + f.id + '">' + f.label + '</span>';
-  });
+  FEELS.forEach(f => {html += '<span class="chip' + (feelList(day).includes(f.id) ? ' selected' : '') + '" data-lefeel="' + f.id + '">' + f.label + '</span>';});
   html += '</div>';
   html += '<div style="margin:2px 0 12px;margin-top:20px;"><span class="mini-lbl">Name it in a word (optional)</span><input type="text" id="le-feelword" value="' + esc(day.feelWord || '') + '" placeholder="e.g. raw, fine, proud, static"></div>';
+  html += '<div style="margin:2px 0 12px;margin-top:20px;"><span class="mini-lbl">Flags (optional)</span></div>';
   html += '<div class="chips">' + dayFlagChips('data-leflag', day) + '</div>';
+  if (day.hard) {
+    html += '<div class="banner quiet">A hard moment, maybe a difficult day. Did you notice it peaked and passed? Where are you still carrying it?</div>';
+  }
+  if (day.rest) {
+    html += '<div class="banner kind">A rest day. The most difficult practice.</div>';
+  }
   html += '</div>';
 
   /* Note to self */
@@ -3473,7 +3488,9 @@ function bindLog() {
     saveState(); renderLog();
   }));
   root.querySelectorAll('[data-lefeel]').forEach(b => b.addEventListener('click', () => {
-    day.feel = day.feel === b.dataset.lefeel ? null : b.dataset.lefeel;
+    const id = b.dataset.lefeel;
+    const cur = feelList(day);
+    day.feel = cur.includes(id) ? cur.filter(x => x !== id) : cur.concat(id);
     saveState(); renderLog();
   }));
 }
@@ -3558,7 +3575,7 @@ function renderTrends() {
 
   html += '<div class="card"><div class="card-title">Steps</div>' +
     (haveCharts ? '<div class="chart-wrap"><canvas id="ch-steps"></canvas></div>' : '') +
-    '<p class="small" style="margin:12px 0 0;">The journey here is gently downhill — softer ground over time, with rest days that are actually rest.</p></div>';
+    '<p class="small" style="margin:12px 0 0;">The path here is gently downhill — softer ground over time, with rest days that are actually rest.</p></div>';
 
   /* movement mix */
   const todayD = todayStr();
@@ -3625,7 +3642,7 @@ function yearCard() {
     '<span><span class="cal-dot cd-heather"></span>logged</span>' +
     '<span><span class="cal-dot cd-plum"></span>rest / untracked</span>' +
     '<span><span class="cal-dot cd-amber"></span>hard moment, named</span></div>';
-  html += '<p class="small" style="margin:12px 0 0;">Tap a month name to open it; tap any square for that day. By spring this will be a field of color — the long view the hard nights can’t see.</p></div>';
+  html += '<p class="small" style="margin:12px 0 0;">Tap a month name to open it; tap any square for that day. The long view the hard nights can’t see.</p></div>';
   return html;
 }
 /* One dot per life-area that got an entry that day:
@@ -3637,7 +3654,7 @@ function calDayDots(ds) {
   const dots = [];
   if (intakeOf(d) != null || d.untracked) dots.push('cd-sage');
   if (d.steps != null || (d.workoutText && d.workoutText.length) || (d.moveTypes || []).length || (d.sessions || []).length || d.rest) dots.push('cd-heather');
-  const inner = (d.focusDone || []).length || d.feel || (d.feelWord && d.feelWord.length) ||
+  const inner = (d.focusDone || []).length || feelList(d).length || (d.feelWord && d.feelWord.length) ||
     state.journal.some(j => j.date === ds);
   if (inner) dots.push('cd-plum');
   if (ANCHORS.filter(a => d.anchors && d.anchors[a.id]).length >= 3) dots.push('cd-gray');
@@ -3712,7 +3729,7 @@ function openDayModal(ds) {
     if ((d.habits || []).length) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">Habits, practices & mind</div><p class="small" style="margin:0 0 15px;">' + d.habits.map(esc).join(' · ') + '</p>';
 
     const feelBits = [];
-    if (d.feel) { const f = FEELS.find(x2 => x2.id === d.feel); if (f) feelBits.push('felt ' + f.label); }
+    if (feelLabels(d).length) feelBits.push('felt ' + feelLabels(d).join(', '));
     if (d.feelWord) feelBits.push('“' + esc(d.feelWord) + '”');
     DAY_FLAGS.forEach(f => { if (d[f.id]) feelBits.push(f.label); });
     if (feelBits.length) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">The day, honestly</div><p class="small" style="margin:0 0 15px;">' + feelBits.join(' · ') + '</p>';
@@ -3732,7 +3749,8 @@ function openDayModal(ds) {
       '<p style="margin:0 0 8px;white-space:pre-wrap;">' + esc(ref.text) + '</p>';
     const wins = state.wins.filter(w => w.date === ds);
     if (wins.length) body += '<div class="section-label" style="margin:12px 0 4px;padding-bottom:2px; border-bottom: 1px dashed var(--line);">Evidence</div>' + wins.map(w => '<p style="margin:0 0 15px;">' + esc(w.text) + ' <span class="win-tag">' + esc(w.tag) + '</span></p>').join('');
-
+    if (d.hard) body += '<div class="banner quiet">A hard moment, maybe a difficult day. Did you notice it peaked and passed? Where are you still carrying it?</div>';
+    if (d.rest) body +='<div class="banner kind">A rest day. The most difficult practice.</div>';
     body += notesHtml(d);
   }
   openModal(
@@ -3820,8 +3838,8 @@ function drawTrendCharts() {
 function renderJourney() {
   const j = state.journey;
   const cur = j.phase || 1;
-  let html = '<h2 class="view-title">the journey</h2>' +
-    '<p class="view-sub">From the PLAN to a life — in five phases. You move when a phase feels lived-in, not when a calendar says so. Going back to an earlier phase during a hard stretch is wisdom, not relapse.</p>';
+  let html = '<h2 class="view-title">the way home</h2>' +
+    '<p class="view-sub">From the plan to a life — in five phases. You progress when a stage feels lived-in.</p>';
 
   html += '<div class="card"><div class="card-title">Eight threads, every phase</div>' +
     '<p class="small" style="margin:0 0 14px;">This was never just about food. The daily focuses rotate across all eight:</p>' +
@@ -3925,21 +3943,21 @@ function bindJourney() {
    TOOLS hub
    ============================================================= */
 function renderTools() {
-  let html = '<h2 class="view-title">tools</h2><p class="view-sub">Everything from the spreadsheet, plus the things a spreadsheet can’t hold.</p>';
+  let html = '<h2 class="view-title">tools</h2><p class="view-sub">For the things you can\'t carry alone.</p>';
   html += '<div class="hub-grid">' +
-    hubCard('calc', 'calculator', 'Expenditure estimates, intake planner, reference tables') +
-    hubCard('trends', 'trends', 'Patterns over weeks, the view from above') +
-    hubCard('plan', 'the plan', 'Anchors, guides, goals — the path forward') +
-    hubCard('journey', 'journey', 'The five phases, eight threads, where you stand') +
-    hubCard('journal', 'journal', 'Evening reflections, the notebook, an evidence log') +
-    hubCard('still', 'still', 'Calming, centering, grounding — breath') +
-    hubCard('selides', 'selídes + syllogés', 'Readings, threads — collect, curate, consider') +
-    hubCard('table', 'at the table', 'A small ritual for meals — settle in, eat, land gently') +
+    hubCard('calc', 'calculator', 'Estimates — intake planner, reference tables') +
+    hubCard('trends', 'trends', 'Patterns over weeks — the view from above') +
+    hubCard('plan', 'the plan', 'Anchors, guides, goals — forward') +
+    hubCard('journey', 'the way home', 'Five phases, eight threads — where you stand') +
+    hubCard('journal', 'journal', 'Reflections, notebook — pieces of evidence') +
+    hubCard('still', 'still', 'Calming, grounding — breath') +
+    hubCard('selides', 'selídes + syllogés', 'Threads — collect, curate, consider') +
+    hubCard('table', 'at the table', 'A small ritual for meals — settle, eat, land gently') +
     '</div>';
   html += '<button class="hub-card hub-long" data-go="archive">' +
     '<span class="hc-top"><span class="hc-icon">' + HUB_ICONS.archive + '</span>' +
     '<span class="hc-name">archive</span></span>' +
-    '<span class="hc-desc">Every day, every page, every piece of evidence — the whole record as one mosaic, newest first.</span></button>';
+    '<span class="hc-desc">Every day, every page, every piece of evidence — the whole record as one mosaic</span></button>';
 
   // wins quick-add lives here too
   html += '<div class="card wash-heather" style="margin-top:16px;"><div class="card-title">Drop a win in the evidence log</div>' +
@@ -4406,12 +4424,12 @@ function renderJournal() {
   if (journalTab === 'recipes') {
     html += '<div class="card"><div class="card-title">Add a recipe</div>' +
       '<p class="small" style="margin:0 0 12px;">One new meal a week is in the plan. Paste a link and import — or fill it in by hand.</p>' +
-      '<div style="display:flex;gap:8px;"><input type="url" id="rc-url" placeholder="https://… (recipe page)" style="flex:1;">' +
+      '<div style="display:flex;gap:8px;"><input type="url" id="rc-url" placeholder="https://… (recipe page)" style="font-size:10px;flex:1;background-color:var(--panel);border-color:var(--panel-2);">' +
       '<button class="small" id="rc-import">Import</button></div>' +
       '<p class="small" id="rc-import-msg" style="margin:8px 0 0;"></p>' +
       '<hr class="soft">' +
       '<div style="margin-bottom:12px;"><span class="mini-lbl">Title</span><input type="text" id="rc-title"></div>' +
-      '<div style="margin-bottom:12px;"><span class="mini-lbl">Image URL (optional)</span><input type="url" id="rc-img"></div>' +
+      '<div style="margin-bottom:12px;"><span class="mini-lbl">Image URL (optional)</span><input type="url" id="rc-img" style="flex:1;background-color:var(--panel);border-color:var(--panel-2);;"></div>' +
       '<div style="margin-bottom:12px;"><span class="mini-lbl">Ingredients</span><textarea id="rc-ing" placeholder="one per line"></textarea></div>' +
       '<div style="margin-bottom:12px;"><span class="mini-lbl">Steps</span><textarea id="rc-steps"></textarea></div>' +
       '<div class="btn-row right"><button class="primary small" id="rc-save">Keep recipe</button></div></div>';
@@ -4705,7 +4723,7 @@ function renderSelides() {
   const draft = prevEl ? prevEl.value : '';
 
   let html = '<h2 class="view-title">selídes + syllogés</h2>' +
-    '<p class="view-sub">Pages and collections. Readings worth arguing with, prompts from the eight threads, and your questionnaire to oneself. Every page keeps its question, and everything lands in the archive.</p>';
+    '<p class="view-sub">Pages and collections. Readings worth linering with + prompts from the eight threads + the questionnaire to oneself. Everything lands in the archive</p>';
 
   /* The questionnaire to oneself — hers, verbatim */
   html += '<div class="card wash-neutral" style="border-color:color-mix(in srgb, var(--plum) 32%, var(--line));"><div class="card-title">The questionnaire to oneself</div>' +
@@ -4750,7 +4768,7 @@ function renderSelides() {
     '<div class="btn-row right" style="margin-top:12px;"><button class="primary small" id="sc-save">Keep this page</button></div></div>';
 
   /* The shelf */
-  html += '<h3>The shelf</h3><p class="small" style="margin:-4px 0 12px;">' + READINGS.length + ' readings, by thread. Other voices only — your own writing lives in the journal. Tap one to open it.</p>';
+  html += '<h3>The shelf</h3><p class="small" style="margin:-4px 0 12px;">' + READINGS.length + ' readings, by thread. Tap one to open it.</p>';
   html += '<input type="search" id="sel-search" placeholder="Search the shelf…" value="' + esc(selShelfQuery) + '" style="margin-bottom:12px;">';
   const shelfRow = (x) => '<button class="sel-item" data-selopen="' + x.i + '" style="display:block;width:100%;text-align:left;background:none;border:none;border-top:1px dashed var(--line);border-radius:0;min-height:0;cursor:pointer;">' +
     '<span class="sel-title" style="font-size:var(--fs-body);display:block;">' + esc(x.r.t) + '</span>' +
@@ -4792,7 +4810,7 @@ function bindSelides() {
   const sqAll = root.querySelector('#sq-all');
   if (sqAll) sqAll.addEventListener('click', () => {
     openModal('<div class="modal-head"><h2>The questionnaire to oneself</h2><button class="x-btn" onclick="closeModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>' +
-      '<div class="modal-body"><p class="small" style="margin:0 0 12px;">After Audre Lorde’s — but these are yours. Tap one to answer it.</p>' +
+      '<div class="modal-body"><p class="small" style="margin:0 0 12px;">Tap one to answer it.</p>' +
       QUESTIONNAIRE.map((qq, i) => '<button class="sel-item" data-sqpick="' + i + '" style="display:block;width:100%;text-align:left;background:none;border:none;border-radius:0;min-height:0;padding:12px 0;cursor:pointer;"><span class="sq-q" style="font-size:var(--fs-body);margin:0;display:block;">' + esc(qq) + '</span></button>').join('') +
       '</div>');
     document.querySelectorAll('[data-sqpick]').forEach(b => b.addEventListener('click', () => {
@@ -5076,7 +5094,7 @@ function archTileHtml(item) {
     if (d.steps != null) bits.push(Math.round(d.steps / 1000) + 'k steps');
     if (d.workoutText) bits.push(esc(d.workoutText));
     (d.sessions || []).forEach(x => bits.push(esc(x.type) + (x.mins ? ' ' + x.mins + 'm' : '')));
-    const feel = d.feel ? (FEELS.find(f => f.id === d.feel) || {}).label || '' : '';
+    const feel = feelLabels(d).join(', ');
     return '<button class="arch-tile t-day" data-arch="day" data-aid="' + d.date + '">' +
       '<div class="at-date"><span>' + d8 + '</span><span class="cal-dots">' + dots + '</span></div>' +
       '<div class="at-stats">' + (bits.join(' · ') || 'logged') + (feel ? ' · felt ' + feel : '') + '</div>' +
@@ -5445,7 +5463,7 @@ function buildArchiveHtml() {
         (bits.length ? '<p>' + bits.join(' · ') + '</p>' : '') +
         '<p class="m">Anchors ' + kept + '/' + ANCHORS.length +
         ((d.habits || []).length ? ' · ' + d.habits.map(esc).join(', ') : '') +
-        (d.feel ? ' · felt ' + esc(d.feel) : '') + (d.feelWord ? ' — “' + esc(d.feelWord) + '”' : '') +
+        (feelLabels(d).length ? ' · felt ' + esc(feelLabels(d).join(', ')) : '') + (d.feelWord ? ' — “' + esc(d.feelWord) + '”' : '') +
         (d.hard || d.night ? ' · a hard moment, named' : '') + (d.rest ? ' · rest day' : '') + '</p>' +
         (focus.length ? '<p class="m">Focuses: ' + focus.join(' / ') + '</p>' : '') +
         (d.note ? '<p class="note">' + esc(d.note) + '</p>' : '') + '</div>';
@@ -5500,7 +5518,7 @@ function buildDaysCsv() {
         CARE_MIN.filter(c => d.care && d.care[c.id]).map(c => c.id).join('; '),
         (d.extraCare || []).join('; '),
         (d.habits || []).join('; '),
-        d.feel, d.feelWord,
+        feelList(d).join('; '), d.feelWord,
         d.hard ? 1 : '', d.night ? 1 : '', d.rest ? 1 : '', d.untracked ? 1 : '',
         Object.values(d.focusTexts || {}).map(f => f.text).join('; '),
         d.note
